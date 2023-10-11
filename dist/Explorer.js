@@ -2231,8 +2231,8 @@ var Explorer = function (_React$PureComponent9) {
       if (!schema) {
         return React.createElement(
           'div',
-          { style: { fontFamily: 'sans-serif' }, className: 'error-container' },
-          'No Schema Available'
+          { className: 'error-container' },
+          'No GraphQL schema available'
         );
       }
       var styleConfig = {

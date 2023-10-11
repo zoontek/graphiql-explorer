@@ -2461,11 +2461,7 @@ class Explorer extends React.PureComponent<Props, State> {
     const {schema, query, makeDefaultArg} = this.props;
 
     if (!schema) {
-      return (
-        <div style={{fontFamily: 'sans-serif'}} className="error-container">
-          No Schema Available
-        </div>
-      );
+      return <div className="error-container">No GraphQL schema available</div>;
     }
     const styleConfig = {
       colors: this.props.colors || defaultColors,
