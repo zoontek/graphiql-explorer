@@ -991,30 +991,6 @@ var AbstractArgView = function (_React$PureComponent4) {
 
       var isArgValueVariable = argValue && argValue.kind === 'Variable';
 
-      var variablizeActionButton = !this.state.displayArgActions ? null : React.createElement(
-        'button',
-        {
-          type: 'submit',
-          className: 'toolbar-button',
-          title: isArgValueVariable ? 'Remove the variable' : 'Extract the current value into a GraphQL variable',
-          onClick: function onClick(event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            if (isArgValueVariable) {
-              devariablize();
-            } else {
-              variablize();
-            }
-          },
-          style: styleConfig.styles.actionButtonStyle },
-        React.createElement(
-          'span',
-          { style: { color: styleConfig.colors.variable } },
-          '$'
-        )
-      );
-
       return React.createElement(
         'div',
         {
@@ -1064,8 +1040,6 @@ var AbstractArgView = function (_React$PureComponent4) {
               } },
             arg.name,
             isRequiredArgument(arg) ? '*' : '',
-            ': ',
-            variablizeActionButton,
             ' '
           ),
           ' '
@@ -2003,21 +1977,8 @@ var RootView = function (_React$PureComponent8) {
           ' ',
           React.createElement(
             'span',
-            { style: { color: styleConfig.colors.def } },
-            React.createElement('input', {
-              style: {
-                color: styleConfig.colors.def,
-                border: 'none',
-                borderBottom: '1px solid #888',
-                outline: 'none',
-                width: Math.max(4, operationDisplayName.length) + 'ch'
-              },
-              autoComplete: 'false',
-              placeholder: capitalize(operationType) + ' Name',
-              value: this.props.name,
-              onKeyDown: this._handlePotentialRun,
-              onChange: this._onOperationRename
-            })
+            { className: 'graphiql-operation-title-bar-name' },
+            this.props.name
           ),
           !!this.props.onTypeName && React.createElement(
             'span',

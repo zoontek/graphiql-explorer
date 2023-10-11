@@ -1174,30 +1174,6 @@ class AbstractArgView extends React.PureComponent<
 
     const isArgValueVariable = argValue && argValue.kind === 'Variable';
 
-    const variablizeActionButton = !this.state.displayArgActions ? null : (
-      <button
-        type="submit"
-        className="toolbar-button"
-        title={
-          isArgValueVariable
-            ? 'Remove the variable'
-            : 'Extract the current value into a GraphQL variable'
-        }
-        onClick={event => {
-          event.preventDefault();
-          event.stopPropagation();
-
-          if (isArgValueVariable) {
-            devariablize();
-          } else {
-            variablize();
-          }
-        }}
-        style={styleConfig.styles.actionButtonStyle}>
-        <span style={{color: styleConfig.colors.variable}}>{'$'}</span>
-      </button>
-    );
-
     return (
       <div
         style={{
@@ -1243,7 +1219,7 @@ class AbstractArgView extends React.PureComponent<
             }}
             onMouseLeave={() => this.setState({displayArgActions: false})}>
             {arg.name}
-            {isRequiredArgument(arg) ? '*' : ''}: {variablizeActionButton}{' '}
+            {isRequiredArgument(arg) ? '*' : ''}{' '}
           </span>{' '}
         </span>
         {input || <span />}{' '}
@@ -2258,21 +2234,8 @@ class RootView extends React.PureComponent<
           onMouseEnter={() => this.setState({displayTitleActions: true})}
           onMouseLeave={() => this.setState({displayTitleActions: false})}>
           {operationType}{' '}
-          <span style={{color: styleConfig.colors.def}}>
-            <input
-              style={{
-                color: styleConfig.colors.def,
-                border: 'none',
-                borderBottom: '1px solid #888',
-                outline: 'none',
-                width: `${Math.max(4, operationDisplayName.length)}ch`,
-              }}
-              autoComplete="false"
-              placeholder={`${capitalize(operationType)} Name`}
-              value={this.props.name}
-              onKeyDown={this._handlePotentialRun}
-              onChange={this._onOperationRename}
-            />
+          <span className="graphiql-operation-title-bar-name">
+            {this.props.name}
           </span>
           {!!this.props.onTypeName && (
             <span>
