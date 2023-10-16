@@ -598,91 +598,32 @@ function canRunOperation(operationName) {
   return operationName !== 'FragmentDefinition';
 }
 
-var ScalarInput = function (_React$PureComponent3) {
-  _inherits(ScalarInput, _React$PureComponent3);
+var AbstractArgView = function (_React$PureComponent3) {
+  _inherits(AbstractArgView, _React$PureComponent3);
 
-  function ScalarInput() {
+  function AbstractArgView() {
     var _ref3;
 
     var _temp3, _this3, _ret3;
 
-    _classCallCheck(this, ScalarInput);
+    _classCallCheck(this, AbstractArgView);
 
     for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
       args[_key3] = arguments[_key3];
     }
 
-    return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, (_ref3 = ScalarInput.__proto__ || Object.getPrototypeOf(ScalarInput)).call.apply(_ref3, [this].concat(args))), _this3), _this3._handleChange = function (event) {
-      _this3.props.setArgValue(event, true);
-    }, _temp3), _possibleConstructorReturn(_this3, _ret3);
-  }
-
-  _createClass(ScalarInput, [{
-    key: 'render',
-    value: function render() {
-      var _this4 = this;
-
-      var _props3 = this.props,
-          arg = _props3.arg,
-          argValue = _props3.argValue,
-          styleConfig = _props3.styleConfig;
-
-      var argType = unwrapInputType(arg.type);
-      var value = typeof argValue.value === 'string' ? argValue.value : '';
-      var color = this.props.argValue.kind === 'StringValue' ? styleConfig.colors.string : styleConfig.colors.number;
-      return React.createElement(
-        'span',
-        { style: { color: color } },
-        argType.name === 'String' ? '"' : '',
-        React.createElement('input', {
-          style: {
-            border: 'none',
-            borderBottom: '1px solid #888',
-            outline: 'none',
-            width: Math.max(1, Math.min(15, value.length)) + 'ch',
-            color: color
-          },
-          ref: function ref(_ref4) {
-            _this4._ref = _ref4;
-          },
-          type: 'text',
-          onChange: this._handleChange,
-          value: value
-        }),
-        argType.name === 'String' ? '"' : ''
-      );
-    }
-  }]);
-
-  return ScalarInput;
-}(React.PureComponent);
-
-var AbstractArgView = function (_React$PureComponent4) {
-  _inherits(AbstractArgView, _React$PureComponent4);
-
-  function AbstractArgView() {
-    var _ref5;
-
-    var _temp4, _this5, _ret4;
-
-    _classCallCheck(this, AbstractArgView);
-
-    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
-    }
-
-    return _ret4 = (_temp4 = (_this5 = _possibleConstructorReturn(this, (_ref5 = AbstractArgView.__proto__ || Object.getPrototypeOf(AbstractArgView)).call.apply(_ref5, [this].concat(args))), _this5), _this5.state = { displayArgActions: false }, _temp4), _possibleConstructorReturn(_this5, _ret4);
+    return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, (_ref3 = AbstractArgView.__proto__ || Object.getPrototypeOf(AbstractArgView)).call.apply(_ref3, [this].concat(args))), _this3), _this3.state = { displayArgActions: false }, _temp3), _possibleConstructorReturn(_this3, _ret3);
   }
 
   _createClass(AbstractArgView, [{
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this4 = this;
 
-      var _props4 = this.props,
-          argValue = _props4.argValue,
-          arg = _props4.arg,
-          styleConfig = _props4.styleConfig;
+      var _props3 = this.props,
+          argValue = _props3.argValue,
+          arg = _props3.arg,
+          styleConfig = _props3.styleConfig;
       /* TODO: handle List types*/
 
       var argType = unwrapInputType(arg.type);
@@ -717,14 +658,6 @@ var AbstractArgView = function (_React$PureComponent4) {
                 'false'
               )
             );
-          } else {
-            input = React.createElement(ScalarInput, {
-              setArgValue: this.props.setArgValue,
-              arg: arg,
-              argValue: argValue,
-              onRunOperation: this.props.onRunOperation,
-              styleConfig: this.props.styleConfig
-            });
           }
         } else if ((0, _graphql.isEnumType)(argType)) {
           if (argValue.kind === 'EnumValue') {
@@ -758,15 +691,15 @@ var AbstractArgView = function (_React$PureComponent4) {
                 return React.createElement(InputArgView, {
                   key: fieldName,
                   arg: _fields3[fieldName],
-                  parentField: _this6.props.parentField,
+                  parentField: _this4.props.parentField,
                   selection: argValue,
-                  modifyFields: _this6.props.setArgFields,
-                  getDefaultScalarArgValue: _this6.props.getDefaultScalarArgValue,
-                  makeDefaultArg: _this6.props.makeDefaultArg,
-                  onRunOperation: _this6.props.onRunOperation,
-                  styleConfig: _this6.props.styleConfig,
-                  onCommit: _this6.props.onCommit,
-                  definition: _this6.props.definition
+                  modifyFields: _this4.props.setArgFields,
+                  getDefaultScalarArgValue: _this4.props.getDefaultScalarArgValue,
+                  makeDefaultArg: _this4.props.makeDefaultArg,
+                  onRunOperation: _this4.props.onRunOperation,
+                  styleConfig: _this4.props.styleConfig,
+                  onCommit: _this4.props.onCommit,
+                  definition: _this4.props.definition
                 });
               })
             );
@@ -786,7 +719,7 @@ var AbstractArgView = function (_React$PureComponent4) {
         */
 
         var baseVariableName = arg.name;
-        var conflictingNameCount = (_this6.props.definition.variableDefinitions || []).filter(function (varDef) {
+        var conflictingNameCount = (_this4.props.definition.variableDefinitions || []).filter(function (varDef) {
           return varDef.variable.name.value.startsWith(baseVariableName);
         }).length;
 
@@ -815,7 +748,7 @@ var AbstractArgView = function (_React$PureComponent4) {
         };
 
         var variableDefinitionByName = function variableDefinitionByName(name) {
-          return (_this6.props.definition.variableDefinitions || []).find(function (varDef) {
+          return (_this4.props.definition.variableDefinitions || []).find(function (varDef) {
             return varDef.variable.name.value === name;
           });
         };
@@ -856,29 +789,29 @@ var AbstractArgView = function (_React$PureComponent4) {
 
         var newlyUnusedVariables = Object.entries(subVariableUsageCountByName)
         // $FlowFixMe: Can't get Object.entries to realize usageCount *must* be a number
-        .filter(function (_ref6) {
-          var _ref7 = _slicedToArray(_ref6, 2),
-              _ = _ref7[0],
-              usageCount = _ref7[1];
+        .filter(function (_ref4) {
+          var _ref5 = _slicedToArray(_ref4, 2),
+              _ = _ref5[0],
+              usageCount = _ref5[1];
 
           return usageCount < 2;
-        }).map(function (_ref8) {
-          var _ref9 = _slicedToArray(_ref8, 2),
-              varName = _ref9[0],
-              _ = _ref9[1];
+        }).map(function (_ref6) {
+          var _ref7 = _slicedToArray(_ref6, 2),
+              varName = _ref7[0],
+              _ = _ref7[1];
 
           return varName;
         });
 
         if (variable) {
-          var _newDoc = _this6.props.setArgValue(variable, false);
+          var _newDoc = _this4.props.setArgValue(variable, false);
 
           if (_newDoc) {
             var targetOperation = _newDoc.definitions.find(function (definition) {
               if (!!definition.operation && !!definition.name && !!definition.name.value &&
               //
-              !!_this6.props.definition.name && !!_this6.props.definition.name.value) {
-                return definition.name.value === _this6.props.definition.name.value;
+              !!_this4.props.definition.name && !!_this4.props.definition.name.value) {
+                return definition.name.value === _this4.props.definition.name.value;
               } else {
                 return false;
               }
@@ -906,7 +839,7 @@ var AbstractArgView = function (_React$PureComponent4) {
               definitions: newDefinitions
             });
 
-            _this6.props.onCommit(finalDoc);
+            _this4.props.onCommit(finalDoc);
           }
         }
       };
@@ -924,7 +857,7 @@ var AbstractArgView = function (_React$PureComponent4) {
         }
 
         var variableName = argValue.name.value;
-        var variableDefinition = (_this6.props.definition.variableDefinitions || []).find(function (varDef) {
+        var variableDefinition = (_this4.props.definition.variableDefinitions || []).find(function (varDef) {
           return varDef.variable.name.value === variableName;
         });
 
@@ -934,13 +867,13 @@ var AbstractArgView = function (_React$PureComponent4) {
 
         var defaultValue = variableDefinition.defaultValue;
 
-        var newDoc = _this6.props.setArgValue(defaultValue, {
+        var newDoc = _this4.props.setArgValue(defaultValue, {
           commit: false
         });
 
         if (newDoc) {
           var targetOperation = newDoc.definitions.find(function (definition) {
-            return definition.name.value === _this6.props.definition.name.value;
+            return definition.name.value === _this4.props.definition.name.value;
           });
 
           if (!targetOperation) {
@@ -985,7 +918,7 @@ var AbstractArgView = function (_React$PureComponent4) {
             definitions: newDefinitions
           });
 
-          _this6.props.onCommit(finalDoc);
+          _this4.props.onCommit(finalDoc);
         }
       };
 
@@ -1010,11 +943,11 @@ var AbstractArgView = function (_React$PureComponent4) {
             onClick: function onClick(event) {
               var shouldAdd = !argValue;
               if (shouldAdd) {
-                _this6.props.addArg(true);
+                _this4.props.addArg(true);
               } else {
-                _this6.props.removeArg(true);
+                _this4.props.removeArg(true);
               }
-              _this6.setState({ displayArgActions: shouldAdd });
+              _this4.setState({ displayArgActions: shouldAdd });
             } },
           (0, _graphql.isInputObjectType)(argType) ? React.createElement(
             'span',
@@ -1032,11 +965,11 @@ var AbstractArgView = function (_React$PureComponent4) {
               onMouseEnter: function onMouseEnter() {
                 // Make implementation a bit easier and only show 'variablize' action if arg is already added
                 if (argValue !== null && typeof argValue !== 'undefined') {
-                  _this6.setState({ displayArgActions: true });
+                  _this4.setState({ displayArgActions: true });
                 }
               },
               onMouseLeave: function onMouseLeave() {
-                return _this6.setState({ displayArgActions: false });
+                return _this4.setState({ displayArgActions: false });
               } },
             arg.name,
             isRequiredArgument(arg) ? '*' : '',
@@ -1053,30 +986,30 @@ var AbstractArgView = function (_React$PureComponent4) {
   return AbstractArgView;
 }(React.PureComponent);
 
-var AbstractView = function (_React$PureComponent5) {
-  _inherits(AbstractView, _React$PureComponent5);
+var AbstractView = function (_React$PureComponent4) {
+  _inherits(AbstractView, _React$PureComponent4);
 
   function AbstractView() {
-    var _ref10;
+    var _ref8;
 
-    var _temp5, _this7, _ret5;
+    var _temp4, _this5, _ret4;
 
     _classCallCheck(this, AbstractView);
 
-    for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-      args[_key5] = arguments[_key5];
+    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      args[_key4] = arguments[_key4];
     }
 
-    return _ret5 = (_temp5 = (_this7 = _possibleConstructorReturn(this, (_ref10 = AbstractView.__proto__ || Object.getPrototypeOf(AbstractView)).call.apply(_ref10, [this].concat(args))), _this7), _this7._addFragment = function () {
-      _this7.props.modifySelections([].concat(_toConsumableArray(_this7.props.selections), [_this7._previousSelection || {
+    return _ret4 = (_temp4 = (_this5 = _possibleConstructorReturn(this, (_ref8 = AbstractView.__proto__ || Object.getPrototypeOf(AbstractView)).call.apply(_ref8, [this].concat(args))), _this5), _this5._addFragment = function () {
+      _this5.props.modifySelections([].concat(_toConsumableArray(_this5.props.selections), [_this5._previousSelection || {
         kind: 'InlineFragment',
         typeCondition: {
           kind: 'NamedType',
-          name: { kind: 'Name', value: _this7.props.implementingType.name }
+          name: { kind: 'Name', value: _this5.props.implementingType.name }
         },
         selectionSet: {
           kind: 'SelectionSet',
-          selections: _this7.props.getDefaultFieldNames(_this7.props.implementingType).map(function (fieldName) {
+          selections: _this5.props.getDefaultFieldNames(_this5.props.implementingType).map(function (fieldName) {
             return {
               kind: 'Field',
               name: { kind: 'Name', value: fieldName }
@@ -1084,15 +1017,15 @@ var AbstractView = function (_React$PureComponent5) {
           })
         }
       }]));
-    }, _this7._removeFragment = function () {
-      var thisSelection = _this7._getSelection();
-      _this7._previousSelection = thisSelection;
-      _this7.props.modifySelections(_this7.props.selections.filter(function (s) {
+    }, _this5._removeFragment = function () {
+      var thisSelection = _this5._getSelection();
+      _this5._previousSelection = thisSelection;
+      _this5.props.modifySelections(_this5.props.selections.filter(function (s) {
         return s !== thisSelection;
       }));
-    }, _this7._getSelection = function () {
-      var selection = _this7.props.selections.find(function (selection) {
-        return selection.kind === 'InlineFragment' && selection.typeCondition && _this7.props.implementingType.name === selection.typeCondition.name.value;
+    }, _this5._getSelection = function () {
+      var selection = _this5.props.selections.find(function (selection) {
+        return selection.kind === 'InlineFragment' && selection.typeCondition && _this5.props.implementingType.name === selection.typeCondition.name.value;
       });
       if (!selection) {
         return null;
@@ -1100,16 +1033,16 @@ var AbstractView = function (_React$PureComponent5) {
       if (selection.kind === 'InlineFragment') {
         return selection;
       }
-    }, _this7._modifyChildSelections = function (selections, options) {
-      var thisSelection = _this7._getSelection();
-      return _this7.props.modifySelections(_this7.props.selections.map(function (selection) {
+    }, _this5._modifyChildSelections = function (selections, options) {
+      var thisSelection = _this5._getSelection();
+      return _this5.props.modifySelections(_this5.props.selections.map(function (selection) {
         if (selection === thisSelection) {
           return {
             directives: selection.directives,
             kind: 'InlineFragment',
             typeCondition: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: _this7.props.implementingType.name }
+              name: { kind: 'Name', value: _this5.props.implementingType.name }
             },
             selectionSet: {
               kind: 'SelectionSet',
@@ -1119,19 +1052,19 @@ var AbstractView = function (_React$PureComponent5) {
         }
         return selection;
       }), options);
-    }, _temp5), _possibleConstructorReturn(_this7, _ret5);
+    }, _temp4), _possibleConstructorReturn(_this5, _ret4);
   }
 
   _createClass(AbstractView, [{
     key: 'render',
     value: function render() {
-      var _this8 = this;
+      var _this6 = this;
 
-      var _props5 = this.props,
-          implementingType = _props5.implementingType,
-          schema = _props5.schema,
-          getDefaultFieldNames = _props5.getDefaultFieldNames,
-          styleConfig = _props5.styleConfig;
+      var _props4 = this.props,
+          implementingType = _props4.implementingType,
+          schema = _props4.schema,
+          getDefaultFieldNames = _props4.getDefaultFieldNames,
+          styleConfig = _props4.styleConfig;
 
       var selection = this._getSelection();
       var fields = implementingType.getFields();
@@ -1163,16 +1096,16 @@ var AbstractView = function (_React$PureComponent5) {
               key: fieldName,
               field: fields[fieldName],
               selections: childSelections,
-              modifySelections: _this8._modifyChildSelections,
+              modifySelections: _this6._modifyChildSelections,
               schema: schema,
               getDefaultFieldNames: getDefaultFieldNames,
-              getDefaultScalarArgValue: _this8.props.getDefaultScalarArgValue,
-              makeDefaultArg: _this8.props.makeDefaultArg,
-              onRunOperation: _this8.props.onRunOperation,
-              onCommit: _this8.props.onCommit,
-              styleConfig: _this8.props.styleConfig,
-              definition: _this8.props.definition,
-              availableFragments: _this8.props.availableFragments
+              getDefaultScalarArgValue: _this6.props.getDefaultScalarArgValue,
+              makeDefaultArg: _this6.props.makeDefaultArg,
+              onRunOperation: _this6.props.onRunOperation,
+              onCommit: _this6.props.onCommit,
+              styleConfig: _this6.props.styleConfig,
+              definition: _this6.props.definition,
+              availableFragments: _this6.props.availableFragments
             });
           })
         ) : null
@@ -1183,40 +1116,40 @@ var AbstractView = function (_React$PureComponent5) {
   return AbstractView;
 }(React.PureComponent);
 
-var FragmentView = function (_React$PureComponent6) {
-  _inherits(FragmentView, _React$PureComponent6);
+var FragmentView = function (_React$PureComponent5) {
+  _inherits(FragmentView, _React$PureComponent5);
 
   function FragmentView() {
-    var _ref11;
+    var _ref9;
 
-    var _temp6, _this9, _ret6;
+    var _temp5, _this7, _ret5;
 
     _classCallCheck(this, FragmentView);
 
-    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-      args[_key6] = arguments[_key6];
+    for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+      args[_key5] = arguments[_key5];
     }
 
-    return _ret6 = (_temp6 = (_this9 = _possibleConstructorReturn(this, (_ref11 = FragmentView.__proto__ || Object.getPrototypeOf(FragmentView)).call.apply(_ref11, [this].concat(args))), _this9), _this9._addFragment = function () {
-      _this9.props.modifySelections([].concat(_toConsumableArray(_this9.props.selections), [_this9._previousSelection || {
+    return _ret5 = (_temp5 = (_this7 = _possibleConstructorReturn(this, (_ref9 = FragmentView.__proto__ || Object.getPrototypeOf(FragmentView)).call.apply(_ref9, [this].concat(args))), _this7), _this7._addFragment = function () {
+      _this7.props.modifySelections([].concat(_toConsumableArray(_this7.props.selections), [_this7._previousSelection || {
         kind: 'FragmentSpread',
-        name: _this9.props.fragment.name
+        name: _this7.props.fragment.name
       }]));
-    }, _this9._removeFragment = function () {
-      var thisSelection = _this9._getSelection();
-      _this9._previousSelection = thisSelection;
-      _this9.props.modifySelections(_this9.props.selections.filter(function (s) {
-        var isTargetSelection = s.kind === 'FragmentSpread' && s.name.value === _this9.props.fragment.name.value;
+    }, _this7._removeFragment = function () {
+      var thisSelection = _this7._getSelection();
+      _this7._previousSelection = thisSelection;
+      _this7.props.modifySelections(_this7.props.selections.filter(function (s) {
+        var isTargetSelection = s.kind === 'FragmentSpread' && s.name.value === _this7.props.fragment.name.value;
 
         return !isTargetSelection;
       }));
-    }, _this9._getSelection = function () {
-      var selection = _this9.props.selections.find(function (selection) {
-        return selection.kind === 'FragmentSpread' && selection.name.value === _this9.props.fragment.name.value;
+    }, _this7._getSelection = function () {
+      var selection = _this7.props.selections.find(function (selection) {
+        return selection.kind === 'FragmentSpread' && selection.name.value === _this7.props.fragment.name.value;
       });
 
       return selection;
-    }, _temp6), _possibleConstructorReturn(_this9, _ret6);
+    }, _temp5), _possibleConstructorReturn(_this7, _ret5);
   }
 
   _createClass(FragmentView, [{
@@ -1358,21 +1291,21 @@ function defaultArgs(getDefaultScalarArgValue, makeDefaultArg, field) {
   return args;
 }
 
-var FieldView = function (_React$PureComponent7) {
-  _inherits(FieldView, _React$PureComponent7);
+var FieldView = function (_React$PureComponent6) {
+  _inherits(FieldView, _React$PureComponent6);
 
   function FieldView() {
-    var _ref12;
+    var _ref10;
 
-    var _temp7, _this10, _ret9;
+    var _temp6, _this8, _ret8;
 
     _classCallCheck(this, FieldView);
 
-    for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-      args[_key7] = arguments[_key7];
+    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      args[_key6] = arguments[_key6];
     }
 
-    return _ret9 = (_temp7 = (_this10 = _possibleConstructorReturn(this, (_ref12 = FieldView.__proto__ || Object.getPrototypeOf(FieldView)).call.apply(_ref12, [this].concat(args))), _this10), _this10.state = { displayFieldActions: false }, _this10._addAllFieldsToSelections = function (rawSubfields) {
+    return _ret8 = (_temp6 = (_this8 = _possibleConstructorReturn(this, (_ref10 = FieldView.__proto__ || Object.getPrototypeOf(FieldView)).call.apply(_ref10, [this].concat(args))), _this8), _this8.state = { displayFieldActions: false }, _this8._addAllFieldsToSelections = function (rawSubfields) {
       var subFields = !!rawSubfields ? Object.keys(rawSubfields).map(function (fieldName) {
         return {
           kind: 'Field',
@@ -1386,50 +1319,50 @@ var FieldView = function (_React$PureComponent7) {
         selections: subFields
       };
 
-      var nextSelections = [].concat(_toConsumableArray(_this10.props.selections.filter(function (selection) {
+      var nextSelections = [].concat(_toConsumableArray(_this8.props.selections.filter(function (selection) {
         if (selection.kind === 'InlineFragment') {
           return true;
         } else {
           // Remove the current selection set for the target field
-          return selection.name.value !== _this10.props.field.name;
+          return selection.name.value !== _this8.props.field.name;
         }
       })), [{
         kind: 'Field',
-        name: { kind: 'Name', value: _this10.props.field.name },
-        arguments: defaultArgs(_this10.props.getDefaultScalarArgValue, _this10.props.makeDefaultArg, _this10.props.field),
+        name: { kind: 'Name', value: _this8.props.field.name },
+        arguments: defaultArgs(_this8.props.getDefaultScalarArgValue, _this8.props.makeDefaultArg, _this8.props.field),
         selectionSet: subSelectionSet
       }]);
 
-      _this10.props.modifySelections(nextSelections);
-    }, _this10._addFieldToSelections = function (rawSubfields) {
-      var nextSelections = [].concat(_toConsumableArray(_this10.props.selections), [_this10._previousSelection || {
+      _this8.props.modifySelections(nextSelections);
+    }, _this8._addFieldToSelections = function (rawSubfields) {
+      var nextSelections = [].concat(_toConsumableArray(_this8.props.selections), [_this8._previousSelection || {
         kind: 'Field',
-        name: { kind: 'Name', value: _this10.props.field.name },
-        arguments: defaultArgs(_this10.props.getDefaultScalarArgValue, _this10.props.makeDefaultArg, _this10.props.field)
+        name: { kind: 'Name', value: _this8.props.field.name },
+        arguments: defaultArgs(_this8.props.getDefaultScalarArgValue, _this8.props.makeDefaultArg, _this8.props.field)
       }]);
 
-      _this10.props.modifySelections(nextSelections);
-    }, _this10._handleUpdateSelections = function (event) {
-      var selection = _this10._getSelection();
+      _this8.props.modifySelections(nextSelections);
+    }, _this8._handleUpdateSelections = function (event) {
+      var selection = _this8._getSelection();
       if (selection && !event.altKey) {
-        _this10._removeFieldFromSelections();
+        _this8._removeFieldFromSelections();
       } else {
-        var fieldType = (0, _graphql.getNamedType)(_this10.props.field.type);
+        var fieldType = (0, _graphql.getNamedType)(_this8.props.field.type);
         var rawSubfields = (0, _graphql.isObjectType)(fieldType) && fieldType.getFields();
 
         var shouldSelectAllSubfields = !!rawSubfields && event.altKey;
 
-        shouldSelectAllSubfields ? _this10._addAllFieldsToSelections(rawSubfields) : _this10._addFieldToSelections(rawSubfields);
+        shouldSelectAllSubfields ? _this8._addAllFieldsToSelections(rawSubfields) : _this8._addFieldToSelections(rawSubfields);
       }
-    }, _this10._removeFieldFromSelections = function () {
-      var previousSelection = _this10._getSelection();
-      _this10._previousSelection = previousSelection;
-      _this10.props.modifySelections(_this10.props.selections.filter(function (selection) {
+    }, _this8._removeFieldFromSelections = function () {
+      var previousSelection = _this8._getSelection();
+      _this8._previousSelection = previousSelection;
+      _this8.props.modifySelections(_this8.props.selections.filter(function (selection) {
         return selection !== previousSelection;
       }));
-    }, _this10._getSelection = function () {
-      var selection = _this10.props.selections.find(function (selection) {
-        return selection.kind === 'Field' && _this10.props.field.name === selection.name.value;
+    }, _this8._getSelection = function () {
+      var selection = _this8.props.selections.find(function (selection) {
+        return selection.kind === 'Field' && _this8.props.field.name === selection.name.value;
       });
       if (!selection) {
         return null;
@@ -1437,13 +1370,13 @@ var FieldView = function (_React$PureComponent7) {
       if (selection.kind === 'Field') {
         return selection;
       }
-    }, _this10._setArguments = function (argumentNodes, options) {
-      var selection = _this10._getSelection();
+    }, _this8._setArguments = function (argumentNodes, options) {
+      var selection = _this8._getSelection();
       if (!selection) {
         console.error('Missing selection when setting arguments', argumentNodes);
         return;
       }
-      return _this10.props.modifySelections(_this10.props.selections.map(function (s) {
+      return _this8.props.modifySelections(_this8.props.selections.map(function (s) {
         return s === selection ? {
           alias: selection.alias,
           arguments: argumentNodes,
@@ -1453,9 +1386,9 @@ var FieldView = function (_React$PureComponent7) {
           selectionSet: selection.selectionSet
         } : s;
       }), options);
-    }, _this10._modifyChildSelections = function (selections, options) {
-      return _this10.props.modifySelections(_this10.props.selections.map(function (selection) {
-        if (selection.kind === 'Field' && _this10.props.field.name === selection.name.value) {
+    }, _this8._modifyChildSelections = function (selections, options) {
+      return _this8.props.modifySelections(_this8.props.selections.map(function (selection) {
+        if (selection.kind === 'Field' && _this8.props.field.name === selection.name.value) {
           if (selection.kind !== 'Field') {
             throw new Error('invalid selection');
           }
@@ -1473,19 +1406,19 @@ var FieldView = function (_React$PureComponent7) {
         }
         return selection;
       }), options);
-    }, _temp7), _possibleConstructorReturn(_this10, _ret9);
+    }, _temp6), _possibleConstructorReturn(_this8, _ret8);
   }
 
   _createClass(FieldView, [{
     key: 'render',
     value: function render() {
-      var _this11 = this;
+      var _this9 = this;
 
-      var _props6 = this.props,
-          field = _props6.field,
-          schema = _props6.schema,
-          getDefaultFieldNames = _props6.getDefaultFieldNames,
-          styleConfig = _props6.styleConfig;
+      var _props5 = this.props,
+          field = _props5.field,
+          schema = _props5.schema,
+          getDefaultFieldNames = _props5.getDefaultFieldNames,
+          styleConfig = _props5.styleConfig;
 
       var selection = this._getSelection();
       var type = unwrapOutputType(field.type);
@@ -1524,11 +1457,11 @@ var FieldView = function (_React$PureComponent7) {
               }).length > 0;
 
               if (containsMeaningfulSubselection) {
-                _this11.setState({ displayFieldActions: true });
+                _this9.setState({ displayFieldActions: true });
               }
             },
             onMouseLeave: function onMouseLeave() {
-              return _this11.setState({ displayFieldActions: false });
+              return _this9.setState({ displayFieldActions: false });
             } },
           (0, _graphql.isObjectType)(type) ? React.createElement(
             'span',
@@ -1601,14 +1534,14 @@ var FieldView = function (_React$PureComponent7) {
                   }
                 };
 
-                var newDoc = _this11._modifyChildSelections(nextSelections, false);
+                var newDoc = _this9._modifyChildSelections(nextSelections, false);
 
                 if (newDoc) {
                   var newDocWithFragment = _extends({}, newDoc, {
                     definitions: [].concat(_toConsumableArray(newDoc.definitions), [newFragmentDefinition])
                   });
 
-                  _this11.props.onCommit(newDocWithFragment);
+                  _this9.props.onCommit(newDocWithFragment);
                 } else {
                   console.warn('Unable to complete extractFragment operation');
                 }
@@ -1632,13 +1565,13 @@ var FieldView = function (_React$PureComponent7) {
               parentField: field,
               arg: arg,
               selection: selection,
-              modifyArguments: _this11._setArguments,
-              getDefaultScalarArgValue: _this11.props.getDefaultScalarArgValue,
-              makeDefaultArg: _this11.props.makeDefaultArg,
-              onRunOperation: _this11.props.onRunOperation,
-              styleConfig: _this11.props.styleConfig,
-              onCommit: _this11.props.onCommit,
-              definition: _this11.props.definition
+              modifyArguments: _this9._setArguments,
+              getDefaultScalarArgValue: _this9.props.getDefaultScalarArgValue,
+              makeDefaultArg: _this9.props.makeDefaultArg,
+              onRunOperation: _this9.props.onRunOperation,
+              styleConfig: _this9.props.styleConfig,
+              onCommit: _this9.props.onCommit,
+              definition: _this9.props.definition
             });
           })
         ) : null
@@ -1661,10 +1594,10 @@ var FieldView = function (_React$PureComponent7) {
                 key: fragmentName,
                 fragment: fragment,
                 selections: childSelections,
-                modifySelections: _this11._modifyChildSelections,
+                modifySelections: _this9._modifyChildSelections,
                 schema: schema,
-                styleConfig: _this11.props.styleConfig,
-                onCommit: _this11.props.onCommit
+                styleConfig: _this9.props.styleConfig,
+                onCommit: _this9.props.onCommit
               });
             }) : null,
             Object.keys(_fields4).sort().map(function (fieldName) {
@@ -1672,16 +1605,16 @@ var FieldView = function (_React$PureComponent7) {
                 key: fieldName,
                 field: _fields4[fieldName],
                 selections: childSelections,
-                modifySelections: _this11._modifyChildSelections,
+                modifySelections: _this9._modifyChildSelections,
                 schema: schema,
                 getDefaultFieldNames: getDefaultFieldNames,
-                getDefaultScalarArgValue: _this11.props.getDefaultScalarArgValue,
-                makeDefaultArg: _this11.props.makeDefaultArg,
-                onRunOperation: _this11.props.onRunOperation,
-                styleConfig: _this11.props.styleConfig,
-                onCommit: _this11.props.onCommit,
-                definition: _this11.props.definition,
-                availableFragments: _this11.props.availableFragments
+                getDefaultScalarArgValue: _this9.props.getDefaultScalarArgValue,
+                makeDefaultArg: _this9.props.makeDefaultArg,
+                onRunOperation: _this9.props.onRunOperation,
+                styleConfig: _this9.props.styleConfig,
+                onCommit: _this9.props.onCommit,
+                definition: _this9.props.definition,
+                availableFragments: _this9.props.availableFragments
               });
             }),
             (0, _graphql.isInterfaceType)(type) || (0, _graphql.isUnionType)(type) ? schema.getPossibleTypes(type).map(function (type) {
@@ -1689,15 +1622,15 @@ var FieldView = function (_React$PureComponent7) {
                 key: type.name,
                 implementingType: type,
                 selections: childSelections,
-                modifySelections: _this11._modifyChildSelections,
+                modifySelections: _this9._modifyChildSelections,
                 schema: schema,
                 getDefaultFieldNames: getDefaultFieldNames,
-                getDefaultScalarArgValue: _this11.props.getDefaultScalarArgValue,
-                makeDefaultArg: _this11.props.makeDefaultArg,
-                onRunOperation: _this11.props.onRunOperation,
-                styleConfig: _this11.props.styleConfig,
-                onCommit: _this11.props.onCommit,
-                definition: _this11.props.definition
+                getDefaultScalarArgValue: _this9.props.getDefaultScalarArgValue,
+                makeDefaultArg: _this9.props.makeDefaultArg,
+                onRunOperation: _this9.props.onRunOperation,
+                styleConfig: _this9.props.styleConfig,
+                onCommit: _this9.props.onCommit,
+                definition: _this9.props.definition
               });
             }) : null
           )
@@ -1798,29 +1731,29 @@ var defaultStyles = {
   }
 };
 
-var RootView = function (_React$PureComponent8) {
-  _inherits(RootView, _React$PureComponent8);
+var RootView = function (_React$PureComponent7) {
+  _inherits(RootView, _React$PureComponent7);
 
   function RootView() {
-    var _ref13;
+    var _ref11;
 
-    var _temp8, _this12, _ret10;
+    var _temp7, _this10, _ret9;
 
     _classCallCheck(this, RootView);
 
-    for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-      args[_key8] = arguments[_key8];
+    for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+      args[_key7] = arguments[_key7];
     }
 
-    return _ret10 = (_temp8 = (_this12 = _possibleConstructorReturn(this, (_ref13 = RootView.__proto__ || Object.getPrototypeOf(RootView)).call.apply(_ref13, [this].concat(args))), _this12), _this12.state = {
+    return _ret9 = (_temp7 = (_this10 = _possibleConstructorReturn(this, (_ref11 = RootView.__proto__ || Object.getPrototypeOf(RootView)).call.apply(_ref11, [this].concat(args))), _this10), _this10.state = {
       newOperationType: 'query',
       displayTitleActions: false,
       groupOpenList: []
-    }, _this12._modifySelections = function (selections, options) {
-      var operationDef = _this12.props.definition;
+    }, _this10._modifySelections = function (selections, options) {
+      var operationDef = _this10.props.definition;
 
-      if (operationDef.selectionSet.selections.length === 0 && _this12._previousOperationDef) {
-        operationDef = _this12._previousOperationDef;
+      if (operationDef.selectionSet.selections.length === 0 && _this10._previousOperationDef) {
+        operationDef = _this10._previousOperationDef;
       }
 
       var newOperationDef = void 0;
@@ -1853,21 +1786,21 @@ var RootView = function (_React$PureComponent8) {
         });
       }
 
-      return _this12.props.onEdit(newOperationDef, options);
-    }, _this12._onOperationRename = function (event) {
-      return _this12.props.onOperationRename(event.target.value);
-    }, _this12._handlePotentialRun = function (event) {
-      if (isRunShortcut(event) && canRunOperation(_this12.props.definition.kind)) {
-        _this12.props.onRunOperation(_this12.props.name);
+      return _this10.props.onEdit(newOperationDef, options);
+    }, _this10._onOperationRename = function (event) {
+      return _this10.props.onOperationRename(event.target.value);
+    }, _this10._handlePotentialRun = function (event) {
+      if (isRunShortcut(event) && canRunOperation(_this10.props.definition.kind)) {
+        _this10.props.onRunOperation(_this10.props.name);
       }
-    }, _this12._rootViewElId = function () {
-      var _this12$props = _this12.props,
-          operationType = _this12$props.operationType,
-          name = _this12$props.name;
+    }, _this10._rootViewElId = function () {
+      var _this10$props = _this10.props,
+          operationType = _this10$props.operationType,
+          name = _this10$props.name;
 
       var rootViewElId = operationType + '-' + (name || 'unknown');
       return rootViewElId;
-    }, _temp8), _possibleConstructorReturn(_this12, _ret10);
+    }, _temp7), _possibleConstructorReturn(_this10, _ret9);
   }
 
   _createClass(RootView, [{
@@ -1880,16 +1813,16 @@ var RootView = function (_React$PureComponent8) {
   }, {
     key: 'render',
     value: function render() {
-      var _this13 = this;
+      var _this11 = this;
 
-      var _props7 = this.props,
-          operationType = _props7.operationType,
-          definition = _props7.definition,
-          schema = _props7.schema,
-          getDefaultFieldNames = _props7.getDefaultFieldNames,
-          _props7$groups = _props7.groups,
-          groups = _props7$groups === undefined ? {} : _props7$groups,
-          styleConfig = _props7.styleConfig;
+      var _props6 = this.props,
+          operationType = _props6.operationType,
+          definition = _props6.definition,
+          schema = _props6.schema,
+          getDefaultFieldNames = _props6.getDefaultFieldNames,
+          _props6$groups = _props6.groups,
+          groups = _props6$groups === undefined ? {} : _props6$groups,
+          styleConfig = _props6.styleConfig;
 
       var rootViewElId = this._rootViewElId();
 
@@ -1910,10 +1843,10 @@ var RootView = function (_React$PureComponent8) {
       var orderedGroupList = {};
 
       if (hasGroups) {
-        Object.entries(groups[operationType]).forEach(function (_ref14) {
-          var _ref15 = _slicedToArray(_ref14, 2),
-              key = _ref15[0],
-              values = _ref15[1];
+        Object.entries(groups[operationType]).forEach(function (_ref12) {
+          var _ref13 = _slicedToArray(_ref12, 2),
+              key = _ref13[0],
+              values = _ref13[1];
 
           groupList[key] = {};
 
@@ -1932,15 +1865,15 @@ var RootView = function (_React$PureComponent8) {
           return acc;
         }, {});
 
-        Object.entries(fields).filter(function (_ref16) {
-          var _ref17 = _slicedToArray(_ref16, 1),
-              key = _ref17[0];
+        Object.entries(fields).filter(function (_ref14) {
+          var _ref15 = _slicedToArray(_ref14, 1),
+              key = _ref15[0];
 
           return !used_names.includes(key);
-        }).forEach(function (_ref18) {
-          var _ref19 = _slicedToArray(_ref18, 2),
-              key = _ref19[0],
-              value = _ref19[1];
+        }).forEach(function (_ref16) {
+          var _ref17 = _slicedToArray(_ref16, 2),
+              key = _ref17[0],
+              value = _ref17[1];
 
           others[key] = value;
         });
@@ -1968,10 +1901,10 @@ var RootView = function (_React$PureComponent8) {
             style: { color: styleConfig.colors.keyword, paddingBottom: 4 },
             className: 'graphiql-operation-title-bar',
             onMouseEnter: function onMouseEnter() {
-              return _this13.setState({ displayTitleActions: true });
+              return _this11.setState({ displayTitleActions: true });
             },
             onMouseLeave: function onMouseLeave() {
-              return _this13.setState({ displayTitleActions: false });
+              return _this11.setState({ displayTitleActions: false });
             } },
           operationType,
           ' ',
@@ -1992,7 +1925,7 @@ var RootView = function (_React$PureComponent8) {
               type: 'submit',
               className: 'toolbar-button',
               onClick: function onClick() {
-                return _this13.props.onOperationDestroy();
+                return _this11.props.onOperationDestroy();
               },
               style: _extends({}, styleConfig.styles.actionButtonStyle) },
             React.createElement(
@@ -2002,15 +1935,15 @@ var RootView = function (_React$PureComponent8) {
             )
           )
         ),
-        operationType === 'mutation' && hasGroups ? Object.entries(orderedGroupList).map(function (_ref20, index) {
-          var _ref21 = _slicedToArray(_ref20, 2),
-              groupName = _ref21[0],
-              groupFields = _ref21[1];
+        operationType === 'mutation' && hasGroups ? Object.entries(orderedGroupList).map(function (_ref18, index) {
+          var _ref19 = _slicedToArray(_ref18, 2),
+              groupName = _ref19[0],
+              groupFields = _ref19[1];
 
           var hasSelection = Object.keys(groupFields).some(function (f) {
             return selectionNameList.includes(f);
           });
-          var isOpen = _this13.state.groupOpenList.includes(groupName) || hasSelection;
+          var isOpen = _this11.state.groupOpenList.includes(groupName) || hasSelection;
 
           return React.createElement(
             'div',
@@ -2029,9 +1962,9 @@ var RootView = function (_React$PureComponent8) {
                   userSelect: 'none'
                 },
                 onClick: function onClick() {
-                  var groupOpenList = _this13.state.groupOpenList;
+                  var groupOpenList = _this11.state.groupOpenList;
 
-                  _this13.setState({
+                  _this11.setState({
                     groupOpenList: isOpen ? groupOpenList.filter(function (name) {
                       return name !== groupName;
                     }) : [].concat(_toConsumableArray(groupOpenList), [groupName])
@@ -2040,7 +1973,7 @@ var RootView = function (_React$PureComponent8) {
               React.createElement(
                 'span',
                 null,
-                isOpen ? _this13.props.styleConfig.arrowOpen : _this13.props.styleConfig.arrowClosed
+                isOpen ? _this11.props.styleConfig.arrowOpen : _this11.props.styleConfig.arrowClosed
               ),
               groupName
             ),
@@ -2054,16 +1987,16 @@ var RootView = function (_React$PureComponent8) {
                   key: fieldName,
                   field: groupFields[fieldName],
                   selections: selections,
-                  modifySelections: _this13._modifySelections,
+                  modifySelections: _this11._modifySelections,
                   schema: schema,
                   getDefaultFieldNames: getDefaultFieldNames,
-                  getDefaultScalarArgValue: _this13.props.getDefaultScalarArgValue,
-                  makeDefaultArg: _this13.props.makeDefaultArg,
-                  onRunOperation: _this13.props.onRunOperation,
-                  styleConfig: _this13.props.styleConfig,
-                  onCommit: _this13.props.onCommit,
-                  definition: _this13.props.definition,
-                  availableFragments: _this13.props.availableFragments
+                  getDefaultScalarArgValue: _this11.props.getDefaultScalarArgValue,
+                  makeDefaultArg: _this11.props.makeDefaultArg,
+                  onRunOperation: _this11.props.onRunOperation,
+                  styleConfig: _this11.props.styleConfig,
+                  onCommit: _this11.props.onCommit,
+                  definition: _this11.props.definition,
+                  availableFragments: _this11.props.availableFragments
                 });
               })
             )
@@ -2073,16 +2006,16 @@ var RootView = function (_React$PureComponent8) {
             key: fieldName,
             field: fields[fieldName],
             selections: selections,
-            modifySelections: _this13._modifySelections,
+            modifySelections: _this11._modifySelections,
             schema: schema,
             getDefaultFieldNames: getDefaultFieldNames,
-            getDefaultScalarArgValue: _this13.props.getDefaultScalarArgValue,
-            makeDefaultArg: _this13.props.makeDefaultArg,
-            onRunOperation: _this13.props.onRunOperation,
-            styleConfig: _this13.props.styleConfig,
-            onCommit: _this13.props.onCommit,
-            definition: _this13.props.definition,
-            availableFragments: _this13.props.availableFragments
+            getDefaultScalarArgValue: _this11.props.getDefaultScalarArgValue,
+            makeDefaultArg: _this11.props.makeDefaultArg,
+            onRunOperation: _this11.props.onRunOperation,
+            styleConfig: _this11.props.styleConfig,
+            onCommit: _this11.props.onCommit,
+            definition: _this11.props.definition,
+            availableFragments: _this11.props.availableFragments
           });
         })
       );
@@ -2136,41 +2069,41 @@ function Attribution() {
   );
 }
 
-var Explorer = function (_React$PureComponent9) {
-  _inherits(Explorer, _React$PureComponent9);
+var Explorer = function (_React$PureComponent8) {
+  _inherits(Explorer, _React$PureComponent8);
 
   function Explorer() {
-    var _ref22;
+    var _ref20;
 
-    var _temp9, _this14, _ret11;
+    var _temp8, _this12, _ret10;
 
     _classCallCheck(this, Explorer);
 
-    for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
-      args[_key9] = arguments[_key9];
+    for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+      args[_key8] = arguments[_key8];
     }
 
-    return _ret11 = (_temp9 = (_this14 = _possibleConstructorReturn(this, (_ref22 = Explorer.__proto__ || Object.getPrototypeOf(Explorer)).call.apply(_ref22, [this].concat(args))), _this14), _this14.state = {
+    return _ret10 = (_temp8 = (_this12 = _possibleConstructorReturn(this, (_ref20 = Explorer.__proto__ || Object.getPrototypeOf(Explorer)).call.apply(_ref20, [this].concat(args))), _this12), _this12.state = {
       newOperationType: 'query',
       operation: null,
       operationToScrollTo: null
-    }, _this14._resetScroll = function () {
-      var container = _this14._ref;
+    }, _this12._resetScroll = function () {
+      var container = _this12._ref;
       if (container) {
         container.scrollLeft = 0;
       }
-    }, _this14._onEdit = function (query) {
-      return _this14.props.onEdit(query);
-    }, _this14._setAddOperationType = function (value) {
-      _this14.setState({ newOperationType: value });
-    }, _this14._handleRootViewMount = function (rootViewElId) {
-      if (!!_this14.state.operationToScrollTo && _this14.state.operationToScrollTo === rootViewElId) {
+    }, _this12._onEdit = function (query) {
+      return _this12.props.onEdit(query);
+    }, _this12._setAddOperationType = function (value) {
+      _this12.setState({ newOperationType: value });
+    }, _this12._handleRootViewMount = function (rootViewElId) {
+      if (!!_this12.state.operationToScrollTo && _this12.state.operationToScrollTo === rootViewElId) {
         var selector = '.graphiql-explorer-root #' + rootViewElId;
 
         var el = document.querySelector(selector);
         el && el.scrollIntoView();
       }
-    }, _temp9), _possibleConstructorReturn(_this14, _ret11);
+    }, _temp8), _possibleConstructorReturn(_this12, _ret10);
   }
 
   _createClass(Explorer, [{
@@ -2181,12 +2114,12 @@ var Explorer = function (_React$PureComponent9) {
   }, {
     key: 'render',
     value: function render() {
-      var _this15 = this;
+      var _this13 = this;
 
-      var _props8 = this.props,
-          schema = _props8.schema,
-          query = _props8.query,
-          makeDefaultArg = _props8.makeDefaultArg;
+      var _props7 = this.props,
+          schema = _props7.schema,
+          query = _props7.query,
+          makeDefaultArg = _props7.makeDefaultArg;
 
 
       if (!schema) {
@@ -2280,7 +2213,7 @@ var Explorer = function (_React$PureComponent9) {
 
         var newDefinitions = [].concat(_toConsumableArray(existingDefs), [newOperation]);
 
-        _this15.setState({ operationToScrollTo: kind + '-' + newOperationName });
+        _this13.setState({ operationToScrollTo: kind + '-' + newOperationName });
 
         return _extends({}, parsedQuery, {
           definitions: newDefinitions
@@ -2358,9 +2291,9 @@ var Explorer = function (_React$PureComponent9) {
           definitions: newDefinitions
         });
 
-        _this15.setState({ operationToScrollTo: kind + '-' + newOperationName });
+        _this13.setState({ operationToScrollTo: kind + '-' + newOperationName });
 
-        _this15.props.onEdit((0, _graphql.print)(newOperationDef));
+        _this13.props.onEdit((0, _graphql.print)(newOperationDef));
       };
 
       var actionsOptions = [!!queryFields ? React.createElement(
@@ -2428,7 +2361,7 @@ var Explorer = function (_React$PureComponent9) {
             'select',
             {
               onChange: function onChange(event) {
-                return _this15._setAddOperationType(event.target.value);
+                return _this13._setAddOperationType(event.target.value);
               },
               value: this.state.newOperationType,
               style: { flexGrow: '2' } },
@@ -2440,7 +2373,7 @@ var Explorer = function (_React$PureComponent9) {
               type: 'submit',
               className: 'toolbar-button',
               onClick: function onClick() {
-                return _this15.state.newOperationType ? addOperation(_this15.state.newOperationType) : null;
+                return _this13.state.newOperationType ? addOperation(_this13.state.newOperationType) : null;
               },
               style: _extends({}, styleConfig.styles.buttonStyle, {
                 height: '22px',
@@ -2488,8 +2421,8 @@ var Explorer = function (_React$PureComponent9) {
       return React.createElement(
         'div',
         {
-          ref: function ref(_ref23) {
-            _this15._ref = _ref23;
+          ref: function ref(_ref21) {
+            _this13._ref = _ref21;
           },
           style: {
             fontSize: 12,
@@ -2517,17 +2450,17 @@ var Explorer = function (_React$PureComponent9) {
 
             var onOperationRename = function onOperationRename(newName) {
               var newOperationDef = renameOperation(operation, newName);
-              _this15.props.onEdit((0, _graphql.print)(newOperationDef));
+              _this13.props.onEdit((0, _graphql.print)(newOperationDef));
             };
 
             var onOperationClone = function onOperationClone() {
               var newOperationDef = cloneOperation(operation);
-              _this15.props.onEdit((0, _graphql.print)(newOperationDef));
+              _this13.props.onEdit((0, _graphql.print)(newOperationDef));
             };
 
             var onOperationDestroy = function onOperationDestroy() {
               var newOperationDef = destroyOperation(operation);
-              _this15.props.onEdit((0, _graphql.print)(newOperationDef));
+              _this13.props.onEdit((0, _graphql.print)(newOperationDef));
             };
 
             var fragmentType = operation.kind === 'FragmentDefinition' && operation.typeCondition.kind === 'NamedType' && schema.getType(operation.typeCondition.name.value);
@@ -2541,7 +2474,7 @@ var Explorer = function (_React$PureComponent9) {
             var onCommit = function onCommit(parsedDocument) {
               var textualNewDocument = (0, _graphql.print)(parsedDocument);
 
-              _this15.props.onEdit(textualNewDocument);
+              _this13.props.onEdit(textualNewDocument);
             };
 
             return React.createElement(RootView, {
@@ -2554,9 +2487,9 @@ var Explorer = function (_React$PureComponent9) {
               onOperationRename: onOperationRename,
               onOperationDestroy: onOperationDestroy,
               onOperationClone: onOperationClone,
-              groups: _this15.props.groups,
+              groups: _this13.props.groups,
               onTypeName: fragmentTypeName,
-              onMount: _this15._handleRootViewMount,
+              onMount: _this13._handleRootViewMount,
               onCommit: onCommit,
               onEdit: function onEdit(newDefinition, options) {
                 var commit = void 0;
@@ -2588,8 +2521,8 @@ var Explorer = function (_React$PureComponent9) {
               getDefaultScalarArgValue: getDefaultScalarArgValue,
               makeDefaultArg: makeDefaultArg,
               onRunOperation: function onRunOperation() {
-                if (!!_this15.props.onRunOperation) {
-                  _this15.props.onRunOperation(operationName);
+                if (!!_this13.props.onRunOperation) {
+                  _this13.props.onRunOperation(operationName);
                 }
               },
               styleConfig: styleConfig,
@@ -2615,17 +2548,17 @@ var ErrorBoundary = function (_React$Component) {
   _inherits(ErrorBoundary, _React$Component);
 
   function ErrorBoundary() {
-    var _ref24;
+    var _ref22;
 
-    var _temp10, _this16, _ret12;
+    var _temp9, _this14, _ret11;
 
     _classCallCheck(this, ErrorBoundary);
 
-    for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
-      args[_key10] = arguments[_key10];
+    for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
+      args[_key9] = arguments[_key9];
     }
 
-    return _ret12 = (_temp10 = (_this16 = _possibleConstructorReturn(this, (_ref24 = ErrorBoundary.__proto__ || Object.getPrototypeOf(ErrorBoundary)).call.apply(_ref24, [this].concat(args))), _this16), _this16.state = { hasError: false, error: null, errorInfo: null }, _temp10), _possibleConstructorReturn(_this16, _ret12);
+    return _ret11 = (_temp9 = (_this14 = _possibleConstructorReturn(this, (_ref22 = ErrorBoundary.__proto__ || Object.getPrototypeOf(ErrorBoundary)).call.apply(_ref22, [this].concat(args))), _this14), _this14.state = { hasError: false, error: null, errorInfo: null }, _temp9), _possibleConstructorReturn(_this14, _ret11);
   }
 
   _createClass(ErrorBoundary, [{
@@ -2662,8 +2595,8 @@ var ErrorBoundary = function (_React$Component) {
   return ErrorBoundary;
 }(React.Component);
 
-var ExplorerWrapper = function (_React$PureComponent10) {
-  _inherits(ExplorerWrapper, _React$PureComponent10);
+var ExplorerWrapper = function (_React$PureComponent9) {
+  _inherits(ExplorerWrapper, _React$PureComponent9);
 
   function ExplorerWrapper() {
     _classCallCheck(this, ExplorerWrapper);

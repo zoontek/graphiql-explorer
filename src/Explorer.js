@@ -770,55 +770,6 @@ function canRunOperation(operationName) {
   return operationName !== 'FragmentDefinition';
 }
 
-type ScalarInputProps = {|
-  arg: GraphQLArgument,
-  argValue: ValueNode,
-  setArgValue: (
-    SyntheticInputEvent<*> | VariableDefinitionNode,
-    commit: boolean,
-  ) => DocumentNode | null,
-  onRunOperation: void => void,
-  styleConfig: StyleConfig,
-|};
-
-class ScalarInput extends React.PureComponent<ScalarInputProps, {}> {
-  _ref: ?any;
-  _handleChange = event => {
-    this.props.setArgValue(event, true);
-  };
-
-  render() {
-    const {arg, argValue, styleConfig} = this.props;
-    const argType = unwrapInputType(arg.type);
-    const value = typeof argValue.value === 'string' ? argValue.value : '';
-    const color =
-      this.props.argValue.kind === 'StringValue'
-        ? styleConfig.colors.string
-        : styleConfig.colors.number;
-    return (
-      <span style={{color}}>
-        {argType.name === 'String' ? '"' : ''}
-        <input
-          style={{
-            border: 'none',
-            borderBottom: '1px solid #888',
-            outline: 'none',
-            width: `${Math.max(1, Math.min(15, value.length))}ch`,
-            color,
-          }}
-          ref={ref => {
-            this._ref = ref;
-          }}
-          type="text"
-          onChange={this._handleChange}
-          value={value}
-        />
-        {argType.name === 'String' ? '"' : ''}
-      </span>
-    );
-  }
-}
-
 type AbstractArgViewProps = {|
   argValue: ?ValueNode,
   arg: GraphQLArgument,
@@ -877,16 +828,6 @@ class AbstractArgView extends React.PureComponent<
                 false
               </option>
             </select>
-          );
-        } else {
-          input = (
-            <ScalarInput
-              setArgValue={this.props.setArgValue}
-              arg={arg}
-              argValue={argValue}
-              onRunOperation={this.props.onRunOperation}
-              styleConfig={this.props.styleConfig}
-            />
           );
         }
       } else if (isEnumType(argType)) {
