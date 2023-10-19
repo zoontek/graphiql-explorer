@@ -2326,64 +2326,55 @@ var Explorer = function (_React$PureComponent8) {
       ) : null].filter(Boolean);
 
       var actionsEl = actionsOptions.length === 0 || this.props.hideActions ? null : React.createElement(
-        'div',
+        'form',
         {
-          style: {
-            minHeight: '50px',
-            maxHeight: '50px',
-            overflow: 'none'
+          className: 'variable-editor-title graphiql-explorer-actions',
+          style: _extends({}, styleConfig.styles.explorerActionsStyle, {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderTop: '1px solid rgb(214, 214, 214)'
+          }),
+          onSubmit: function onSubmit(event) {
+            return event.preventDefault();
           } },
         React.createElement(
-          'form',
+          'span',
           {
-            className: 'variable-editor-title graphiql-explorer-actions',
-            style: _extends({}, styleConfig.styles.explorerActionsStyle, {
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderTop: '1px solid rgb(214, 214, 214)'
-            }),
-            onSubmit: function onSubmit(event) {
-              return event.preventDefault();
+            style: {
+              display: 'inline-block',
+              flexGrow: '0',
+              textAlign: 'right'
             } },
+          'Add new',
+          ' '
+        ),
+        React.createElement(
+          'select',
+          {
+            onChange: function onChange(event) {
+              return _this13._setAddOperationType(event.target.value);
+            },
+            value: this.state.newOperationType,
+            style: { flexGrow: '2' } },
+          actionsOptions
+        ),
+        React.createElement(
+          'button',
+          {
+            type: 'submit',
+            className: 'toolbar-button',
+            onClick: function onClick() {
+              return _this13.state.newOperationType ? addOperation(_this13.state.newOperationType) : null;
+            },
+            style: _extends({}, styleConfig.styles.buttonStyle, {
+              height: '22px',
+              width: '22px'
+            }) },
           React.createElement(
             'span',
-            {
-              style: {
-                display: 'inline-block',
-                flexGrow: '0',
-                textAlign: 'right'
-              } },
-            'Add new',
-            ' '
-          ),
-          React.createElement(
-            'select',
-            {
-              onChange: function onChange(event) {
-                return _this13._setAddOperationType(event.target.value);
-              },
-              value: this.state.newOperationType,
-              style: { flexGrow: '2' } },
-            actionsOptions
-          ),
-          React.createElement(
-            'button',
-            {
-              type: 'submit',
-              className: 'toolbar-button',
-              onClick: function onClick() {
-                return _this13.state.newOperationType ? addOperation(_this13.state.newOperationType) : null;
-              },
-              style: _extends({}, styleConfig.styles.buttonStyle, {
-                height: '22px',
-                width: '22px'
-              }) },
-            React.createElement(
-              'span',
-              null,
-              '+'
-            )
+            null,
+            '+'
           )
         )
       );
@@ -2419,117 +2410,125 @@ var Explorer = function (_React$PureComponent8) {
       var attribution = this.props.showAttribution ? React.createElement(Attribution, null) : null;
 
       return React.createElement(
-        'div',
-        {
-          ref: function ref(_ref21) {
-            _this13._ref = _ref21;
-          },
-          style: {
-            fontSize: 12,
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            margin: 0,
-            padding: 8,
-            fontFamily: 'Consolas, Inconsolata, "Droid Sans Mono", Monaco, monospace',
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%'
-          },
-          className: 'graphiql-explorer-root' },
+        React.Fragment,
+        null,
         React.createElement(
           'div',
           {
+            className: 'graphiql-explorer-root',
+            ref: function ref(_ref21) {
+              _this13._ref = _ref21;
+            },
             style: {
-              flexGrow: '1',
-              overflow: 'scroll'
+              fontSize: 12,
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              margin: 0,
+              padding: 8,
+              fontFamily: 'Consolas, Inconsolata, "Droid Sans Mono", Monaco, monospace',
+              display: 'flex',
+              flexDirection: 'column'
             } },
-          relevantOperations.map(function (operation, index) {
-            var operationName = operation && operation.name && operation.name.value;
+          React.createElement(
+            'div',
+            { className: 'graphiql-explorer-content' },
+            React.createElement(
+              'div',
+              { className: 'doc-explorer-title-bar' },
+              React.createElement(
+                'div',
+                { className: 'doc-explorer-title' },
+                this.props.title
+              )
+            ),
+            relevantOperations.map(function (operation, index) {
+              var operationName = operation && operation.name && operation.name.value;
 
-            var operationType = operation.kind === 'FragmentDefinition' ? 'fragment' : operation && operation.operation || 'query';
+              var operationType = operation.kind === 'FragmentDefinition' ? 'fragment' : operation && operation.operation || 'query';
 
-            var onOperationRename = function onOperationRename(newName) {
-              var newOperationDef = renameOperation(operation, newName);
-              _this13.props.onEdit((0, _graphql.print)(newOperationDef));
-            };
+              var onOperationRename = function onOperationRename(newName) {
+                var newOperationDef = renameOperation(operation, newName);
+                _this13.props.onEdit((0, _graphql.print)(newOperationDef));
+              };
 
-            var onOperationClone = function onOperationClone() {
-              var newOperationDef = cloneOperation(operation);
-              _this13.props.onEdit((0, _graphql.print)(newOperationDef));
-            };
+              var onOperationClone = function onOperationClone() {
+                var newOperationDef = cloneOperation(operation);
+                _this13.props.onEdit((0, _graphql.print)(newOperationDef));
+              };
 
-            var onOperationDestroy = function onOperationDestroy() {
-              var newOperationDef = destroyOperation(operation);
-              _this13.props.onEdit((0, _graphql.print)(newOperationDef));
-            };
+              var onOperationDestroy = function onOperationDestroy() {
+                var newOperationDef = destroyOperation(operation);
+                _this13.props.onEdit((0, _graphql.print)(newOperationDef));
+              };
 
-            var fragmentType = operation.kind === 'FragmentDefinition' && operation.typeCondition.kind === 'NamedType' && schema.getType(operation.typeCondition.name.value);
+              var fragmentType = operation.kind === 'FragmentDefinition' && operation.typeCondition.kind === 'NamedType' && schema.getType(operation.typeCondition.name.value);
 
-            var fragmentFields = fragmentType instanceof _graphql.GraphQLObjectType ? fragmentType.getFields() : null;
+              var fragmentFields = fragmentType instanceof _graphql.GraphQLObjectType ? fragmentType.getFields() : null;
 
-            var fields = operationType === 'query' ? queryFields : operationType === 'mutation' ? mutationFields : operationType === 'subscription' ? subscriptionFields : operation.kind === 'FragmentDefinition' ? fragmentFields : null;
+              var fields = operationType === 'query' ? queryFields : operationType === 'mutation' ? mutationFields : operationType === 'subscription' ? subscriptionFields : operation.kind === 'FragmentDefinition' ? fragmentFields : null;
 
-            var fragmentTypeName = operation.kind === 'FragmentDefinition' ? operation.typeCondition.name.value : null;
+              var fragmentTypeName = operation.kind === 'FragmentDefinition' ? operation.typeCondition.name.value : null;
 
-            var onCommit = function onCommit(parsedDocument) {
-              var textualNewDocument = (0, _graphql.print)(parsedDocument);
+              var onCommit = function onCommit(parsedDocument) {
+                var textualNewDocument = (0, _graphql.print)(parsedDocument);
 
-              _this13.props.onEdit(textualNewDocument);
-            };
+                _this13.props.onEdit(textualNewDocument);
+              };
 
-            return React.createElement(RootView, {
-              key: index,
-              isLast: index === relevantOperations.length - 1,
-              fields: fields,
-              operationType: operationType,
-              name: operationName,
-              definition: operation,
-              onOperationRename: onOperationRename,
-              onOperationDestroy: onOperationDestroy,
-              onOperationClone: onOperationClone,
-              groups: _this13.props.groups,
-              onTypeName: fragmentTypeName,
-              onMount: _this13._handleRootViewMount,
-              onCommit: onCommit,
-              onEdit: function onEdit(newDefinition, options) {
-                var commit = void 0;
-                if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object' && typeof options.commit !== 'undefined') {
-                  commit = options.commit;
-                } else {
-                  commit = true;
-                }
-
-                if (!!newDefinition) {
-                  var newQuery = _extends({}, parsedQuery, {
-                    definitions: parsedQuery.definitions.map(function (existingDefinition) {
-                      return existingDefinition === operation ? newDefinition : existingDefinition;
-                    })
-                  });
-
-                  if (commit) {
-                    onCommit(newQuery);
-                    return newQuery;
+              return React.createElement(RootView, {
+                key: index,
+                isLast: index === relevantOperations.length - 1,
+                fields: fields,
+                operationType: operationType,
+                name: operationName,
+                definition: operation,
+                onOperationRename: onOperationRename,
+                onOperationDestroy: onOperationDestroy,
+                onOperationClone: onOperationClone,
+                groups: _this13.props.groups,
+                onTypeName: fragmentTypeName,
+                onMount: _this13._handleRootViewMount,
+                onCommit: onCommit,
+                onEdit: function onEdit(newDefinition, options) {
+                  var commit = void 0;
+                  if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object' && typeof options.commit !== 'undefined') {
+                    commit = options.commit;
                   } else {
-                    return newQuery;
+                    commit = true;
                   }
-                } else {
-                  return parsedQuery;
-                }
-              },
-              schema: schema,
-              getDefaultFieldNames: getDefaultFieldNames,
-              getDefaultScalarArgValue: getDefaultScalarArgValue,
-              makeDefaultArg: makeDefaultArg,
-              onRunOperation: function onRunOperation() {
-                if (!!_this13.props.onRunOperation) {
-                  _this13.props.onRunOperation(operationName);
-                }
-              },
-              styleConfig: styleConfig,
-              availableFragments: availableFragments
-            });
-          }),
-          attribution
+
+                  if (!!newDefinition) {
+                    var newQuery = _extends({}, parsedQuery, {
+                      definitions: parsedQuery.definitions.map(function (existingDefinition) {
+                        return existingDefinition === operation ? newDefinition : existingDefinition;
+                      })
+                    });
+
+                    if (commit) {
+                      onCommit(newQuery);
+                      return newQuery;
+                    } else {
+                      return newQuery;
+                    }
+                  } else {
+                    return parsedQuery;
+                  }
+                },
+                schema: schema,
+                getDefaultFieldNames: getDefaultFieldNames,
+                getDefaultScalarArgValue: getDefaultScalarArgValue,
+                makeDefaultArg: makeDefaultArg,
+                onRunOperation: function onRunOperation() {
+                  if (!!_this13.props.onRunOperation) {
+                    _this13.props.onRunOperation(operationName);
+                  }
+                },
+                styleConfig: styleConfig,
+                availableFragments: availableFragments
+              });
+            }),
+            attribution
+          )
         ),
         actionsEl
       );
@@ -2608,54 +2607,9 @@ var ExplorerWrapper = function (_React$PureComponent9) {
     key: 'render',
     value: function render() {
       return React.createElement(
-        'div',
-        {
-          className: 'docExplorerWrap',
-          style: {
-            height: '100%',
-            width: this.props.width,
-            minWidth: this.props.width,
-            zIndex: 7,
-            display: this.props.explorerIsOpen ? 'flex' : 'none',
-            flexDirection: 'column',
-            overflow: 'hidden'
-          } },
-        React.createElement(
-          'div',
-          { className: 'doc-explorer-title-bar' },
-          React.createElement(
-            'div',
-            { className: 'doc-explorer-title' },
-            this.props.title
-          ),
-          React.createElement(
-            'div',
-            { className: 'doc-explorer-rhs' },
-            React.createElement(
-              'div',
-              {
-                className: 'docExplorerHide',
-                onClick: this.props.onToggleExplorer },
-              '\u2715'
-            )
-          )
-        ),
-        React.createElement(
-          'div',
-          {
-            className: 'doc-explorer-contents',
-            style: {
-              padding: '0px',
-              /* Unset overflowY since docExplorerWrap sets it and it'll
-              cause two scrollbars (one for the container and one for the schema tree) */
-              overflowY: 'unset'
-            } },
-          React.createElement(
-            ErrorBoundary,
-            null,
-            React.createElement(Explorer, this.props)
-          )
-        )
+        ErrorBoundary,
+        null,
+        React.createElement(Explorer, this.props)
       );
     }
   }]);
@@ -2665,7 +2619,6 @@ var ExplorerWrapper = function (_React$PureComponent9) {
 
 ExplorerWrapper.defaultValue = defaultValue;
 ExplorerWrapper.defaultProps = {
-  width: 320,
   title: 'Explorer'
 };
 exports.default = ExplorerWrapper;
